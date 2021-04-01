@@ -1,4 +1,3 @@
-// last
 export const chooseIdentityType = [
   {
     question: "Choose your Identity Type",
@@ -38,9 +37,10 @@ export const chooseIdentityType = [
   },
 ];
 
-const identityDocument = [
+export const identityDocument = [
   {
     question: "Who is the policy owner",
+    appHeader: "Identity Document",
     options: [
       {
         name: "Name of Insured Person",
@@ -56,17 +56,19 @@ const identityDocument = [
   },
 ];
 
-const proposalDeclined = [
+export const proposalDeclined = [
   {
     question: "Give Details",
+    appHeader: "PenCom",
     nextPull: identityDocument,
   },
 ];
 
-const beneficiaryContd2 = [
+export const beneficiaryContd2 = [
   {
     question:
       "Has any proposal under your life ever been Declined, Postponed, Defferred, Withdrawn, or Accepted on Special Terms.",
+    appHeader: "Beneficiary",
     options: [
       {
         name: "Yes",
@@ -80,9 +82,10 @@ const beneficiaryContd2 = [
   },
 ];
 
-const beneficiaryHasInsurancePolicy = [
+export const beneficiaryHasInsurancePolicy = [
   {
     question: "What is the name of the Insurance Company?",
+    appHeader: "PenCom",
   },
   {
     question: "Insurance Policy Number",
@@ -105,7 +108,7 @@ const beneficiaryHasInsurancePolicy = [
   },
 ];
 
-const beneficiaryContd = [
+export const beneficiaryContd = [
   {
     question: "Do you have an existing Insurance Policy?",
     options: [
@@ -121,7 +124,7 @@ const beneficiaryContd = [
   },
 ];
 
-const beneficiaryAbove18 = [
+export const beneficiaryAbove18 = [
   {
     question: "Name of beneficiary",
   },
@@ -137,29 +140,30 @@ const beneficiaryAbove18 = [
   },
 ];
 
-const beneficiaryBelow18 = [
+export const beneficiaryBelow18 = [
   {
-    question: "Guadian Name",
+    question: "Guardian's Name",
   },
   {
-    question: "Guadian Phone Number",
+    question: "Guardian's Phone Number",
   },
   {
-    question: "Guadian Address",
+    question: "Guardian's Address",
     nextPull: beneficiaryContd,
   },
 ];
 
-const beneficiary = [
+export const beneficiary = [
   {
     question: "Choose Beneficiary",
+    appHeader: "Beneficiary",
     options: [
       {
         name: "New Beneficiary",
       },
     ],
+    // /GET ​/beneficiary
   },
-
   {
     question: "How old is your Benficiary",
     options: [
@@ -175,71 +179,121 @@ const beneficiary = [
   },
 ];
 
-const doctorDetails = [
+export const doctorDetails = [
   {
     question: "What is the name of your Doctor?",
-    nextPull: beneficiary,
+    appHeader: "Doctor Details",
+  },
+  {
+    question: "What is the name of the Hospital?",
+  },
+  {
+    question: "What is the Hosptial's Address?",
+  },
+  {
+    question: "Doctors Phone Number",
+  },
+  {
+    question: "How long have you been a patient to this Doctor?",
+  },
+  {
+    question: "Capture Insured Image",
+    options: [
+      {
+        name: "open camera",
+        nextPull: beneficiary,
+      },
+    ],
   },
 ];
 
-const medicalDetails = [
+export const medicalDetails = [
   {
     question: "What is your Weight",
+    appHeader: "Health Form",
   },
   {
     question: "What is your Height?",
   },
   {
     question: "What is your Gender?",
+    options: [
+      {
+        name: "Male",
+      },
+      {
+        name: "Female",
+      },
+    ],
   },
   {
     question:
       "Have you ever suffered from epilepsy, brain tumor or other mental disturbances?",
-    options: [
-      {
-        name: "yes",
-      },
-      {
-        name: "no",
-      },
-    ],
+    options: [{ name: "yes" }, { name: "no" }],
+    // neuralIssues
   },
   {
     question:
       "Have you ever been treated for Tuberculosis, Asthma, Pneumonia or any other chest or heart disease?",
-    options: [
-      {
-        name: "yes",
-        nextPull: doctorDetails,
-      },
-      {
-        name: "no",
-        nextPull: doctorDetails,
-      },
-    ],
+    options: [{ name: "yes" }, { name: "no" }],
   },
+  {
+    question:
+      "Have you ever suffered from any infection of the kidney, liver, urinary organs, blood in urine or any form of cancer?",
+    options: [{ name: "yes" }, { name: "no" }],
+  },
+  {
+    question:
+      "Have you ever been diagnosed, counselled or treated in connection with sexually transmitted diseases, including syphillis, HIV(AIDS), Hepatitis B/C or Herpes?",
+    options: [{ name: "yes" }, { name: "no" }],
+  },
+
+  {
+    question:
+      "Do you have any pre-existing conditions or suffered from any other illness, disorder, diseases not mentioned above?",
+    options: [{ name: "yes" }, { name: "no" }],
+  },
+
+  {
+    question:
+      "Have you any disability or any previous accident or undergone any operation?",
+    options: [{ name: "yes" }, { name: "no" }],
+  },
+
+  {
+    question: "Do you have consume alcohol?",
+    options: [{ name: "yes" }, { name: "no" }],
+  },
+
+  {
+    question: "How many litres?",
+  },
+
+  {
+    question: "Do you consume tobacco?",
+    options: [{ name: "yes" }, { name: "no" }],
+  },
+
+  {
+    question: "How many sticks?",
+  },
+
+  {
+    question: "Are you currently Pregnant?",
+    options: [{ name: "yes" }, { name: "no" }],
+  },
+
+  {
+    question: "When is your expected delivery date?",
+    nextPull: doctorDetails,
+  },
+
+  // respiratoryIssues
 ];
 
-const termsIntro = [
-  {
-    question: "Select quote options",
-    options: [
-      {
-        name: "I have a target sum assured",
-      },
-      {
-        name: "I have a premium I want to pay",
-      },
-    ],
-  },
-  {
-    question: "What is your sum Assured",
-  },
+export const termsIntroContd = [
   {
     question: "Duration in Years",
-  },
-  {
-    question: "What is your Date of Birth",
   },
   {
     question: "Your Quoted Premium is:",
@@ -251,9 +305,50 @@ const termsIntro = [
         name: "Quarterly",
       },
     ],
+    // call /user/signup
   },
   {
+    question: "A mail is on it’s way to your inbox",
+    questionDescription: "Check t*****ft8@gmail.com",
+    nextPull: medicalDetails,
+  },
+];
+
+export const premiumAndWantToPay = [
+  {
+    question: "What is the Premium you want to pay?",
+    nextPull: termsIntroContd,
+  },
+];
+
+export const targetSumAssured = [
+  {
+    question: "What is your sum Assured",
+    nextPull: termsIntroContd,
+  },
+];
+
+export const termsIntro = [
+  {
+    question: "Select quote options",
+    appHeader: "Term",
+    options: [
+      {
+        name: "I have a target sum assured",
+        nextPull: targetSumAssured,
+      },
+      {
+        name: "I have a premium I want to pay",
+        nextPull: premiumAndWantToPay,
+      },
+    ],
+  },
+];
+
+export const userDetailQuestions = [
+  {
     question: "What is your Firstname",
+    appHeader: "Let's get to know you",
   },
   {
     question: "What is your Lastname",
@@ -269,21 +364,22 @@ const termsIntro = [
   },
   {
     question: "What is your Occupation",
+    nextPull: termsIntro,
   },
-  {
-    question: "A mail is on it’s way to your inbox",
-    questionDescription: "Check t*****ft8@gmail.com",
-    nextPull: medicalDetails,
-  },
+
+  // validate otp
+  // /insured-person
+  // uuid gen v4
 ];
 
 export const intro = [
   {
     question: "What Type of plan would you like to buy?",
+    appHeader: "Buy Assurance",
     options: [
       {
-        name: "Term",
-        nextPull: termsIntro,
+        name: "Term Assurance",
+        nextPull: userDetailQuestions,
       },
       {
         name: "Education Endowment",

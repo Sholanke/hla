@@ -3,11 +3,28 @@ import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import Question from "./components/Question";
 import QuestionContextProvider from "./context/QuestionContext";
+import QuestionSummary from "./components/QuestionSummary";
+import "./styles/main.scss";
+import QuestionStepper from "./components/QuestionStepper";
+import QuestionsHeader from "./components/QuestionsHeader";
+import AppHeader from "./components/AppHeader";
 
 ReactDOM.render(
   <React.StrictMode>
     <QuestionContextProvider>
-      <Question />
+      <AppHeader />
+      <div className="app">
+        <QuestionsHeader />
+        <div className="form">
+          <QuestionStepper />
+          <div className="form-content-holder">
+            <div className="form-content-holder__section">
+              <Question />
+              <QuestionSummary />
+            </div>
+          </div>
+        </div>
+      </div>
     </QuestionContextProvider>
   </React.StrictMode>,
   document.getElementById("root")

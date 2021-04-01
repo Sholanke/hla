@@ -7,28 +7,56 @@ export default function QuestionContextProvider({ children }) {
   const [questionState, setQuestionState] = useState({
     currentIndex: 0,
     pull: intro,
+    appHeader: "",
+    answers: [],
   });
 
-  useEffect(() => {
-    console.log(questionState);
-
+  const saveAnswer = (answer) => {
     setQuestionState((prev) => ({
       ...prev,
-      currentIndex: 0,
-      currentQuestion: questionState.pull[0],
+      answers: [...prev.answers, { ...prev, answer }],
     }));
-  }, [questionState.pull]);
+  };
 
   useEffect(() => {
     setQuestionState((prev) => ({
       ...prev,
-      currentQuestion: questionState.pull[questionState.currentIndex],
+      currentQuestion: prev.pull[questionState.currentIndex],
     }));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [questionState.currentIndex]);
+  }, [questionState.currentIndex, questionState.pull]);
+
+  useEffect(() => {
+    const appHeader = questionState.currentQuestion?.appHeader;
+    if (appHeader) {
+      setQuestionState((prev) => ({
+        ...prev,
+        appHeader,
+      }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionState.currentQuestion]);
+
+  const previousQuestion =
+    questionState?.answers?.[questionState?.answers?.length - 1];
+
+  const goToPreviousQuestion = () => {
+    if (questionState.answers.length > 0) {
+      setQuestionState(previousQuestion);
+    }
+  };
 
   return (
-    <questionContext.Provider value={{ questionState, setQuestionState }}>
+    <questionContext.Provider
+      value={{
+        questionState,
+        previousQuestion,
+        setQuestionState,
+        goToPreviousQuestion,
+        saveAnswer,
+      }}
+    >
       {children}
     </questionContext.Provider>
   );
