@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuestionContext } from "../context/QuestionContext";
+import { genderOptions } from "../utils/questions";
+import QuestionSummary from "./QuestionSummary";
 
 // const inputTypes = ["date", "number"];
 // const optionTypes = ["gender", "file"];
@@ -8,17 +10,17 @@ export default function Question() {
   const { questionState, setQuestionState, saveAnswer } = useQuestionContext();
   const [inputValue, setValue] = useState("");
 
-  const options = questionState?.currentQuestion?.options;
-
   const handleInputChange = ({ currentTarget: { value } }) => {
     setValue(value);
   };
 
+  const options = questionState?.currentQuestion?.options;
+
+  const showSummary = questionState?.currentQuestion?.isEnd;
+
   const nextQuestion = (answerToCurrentQuestion, nextPull) => {
     //empty value...
-    if (questionState.currentQuestion.isLastQuestion) {
-      alert("This is the end");
-    } else {
+    if (!showSummary) {
       //changing questions...
       saveAnswer(answerToCurrentQuestion);
 
@@ -45,52 +47,78 @@ export default function Question() {
 
   return (
     <>
-      <PrevQuestion />
-      {questionState.currentQuestion && (
-        <div className="form-question">
-          <p className="form-question__title">
-            {questionState.currentQuestion.question}
-          </p>
-          <br />
+      {showSummary ? (
+        <QuestionSummary />
+      ) : (
+        <>
+          <PrevQuestion />
+          {questionState.currentQuestion && (
+            <div className="form-question">
+              <p className="form-question__title">
+                {questionState.currentQuestion.question}
+              </p>
+              <br />
 
-          {options ? (
-            options?.map((option, i) => (
-              <button
-                className="form-question__option"
-                onClick={() => {
-                  nextQuestion(option.value || option.name, option.nextPull);
-                }}
-                key={i}
-              >
-                {option.name}
-              </button>
-            ))
-          ) : (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                nextQuestion(
-                  inputValue,
-                  questionState.currentQuestion.nextPull
-                );
-                setValue("");
-              }}
-            >
-              <input
-                className="form-question__input"
-                placeholder="Type Here"
-                value={inputValue}
-                onChange={handleInputChange}
-              />
+              {options ? (
+                options.map((option, i) => (
+                  <button
+                    className="form-question__option"
+                    onClick={() => {
+                      nextQuestion(
+                        option.value || option.name,
+                        option.nextPull
+                      );
+                    }}
+                    key={i}
+                  >
+                    {option.name}
+                  </button>
+                ))
+              ) : questionState.currentQuestion.type === "gender" ? (
+                genderOptions.map((gender) => (
+                  <button
+                    className="form-question__option--gender"
+                    data-gender={gender.name}
+                    onClick={() => {
+                      nextQuestion(
+                        gender.name,
+                        questionState.currentQuestion.nextPull
+                      );
+                    }}
+                  >
+                    {gender.name}
+                  </button>
+                ))
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    nextQuestion(
+                      inputValue,
+                      questionState.currentQuestion.nextPull
+                    );
+                    setValue("");
+                  }}
+                >
+                  <input
+                    className="form-question__input"
+                    placeholder="Type Here"
+                    type={questionState.currentQuestion.type || "text"}
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    // required
+                  />
 
-              <div className="form-question__footer">
-                <button className="form-question__footer__next-btn">
-                  Continue
-                </button>
-              </div>
-            </form>
+                  <div className="form-question__footer">
+                    <button className="form-question__footer__next-btn">
+                      Continue
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
           )}
-        </div>
+        </>
       )}
     </>
   );

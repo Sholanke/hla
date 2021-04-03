@@ -27,13 +27,28 @@ export const chooseIdentityType = [
   },
   {
     question: "Whats is your Date of Birth?",
+    type: "date",
   },
   {
     question: "Whats is your Gender?",
+    type: "gender",
   },
   {
     question: "Whats is Occupation",
-    isLastQuestion: true,
+  },
+  {
+    question: "Upload Identity ID",
+    options: [
+      {
+        name: "Capture Utitlity Bill",
+      },
+      {
+        name: "Upload Utitlity Bill",
+      },
+    ],
+  },
+  {
+    isEnd: true,
   },
 ];
 
@@ -50,10 +65,10 @@ export const identityDocument = [
       },
       {
         name: "New customer",
-        nextPull: chooseIdentityType,
       },
     ],
   },
+  ...chooseIdentityType,
 ];
 
 export const proposalDeclined = [
@@ -149,8 +164,8 @@ export const beneficiaryBelow18 = [
   },
   {
     question: "Guardian's Address",
-    nextPull: beneficiaryContd,
   },
+  ...beneficiaryAbove18,
 ];
 
 export const beneficiary = [
@@ -207,24 +222,62 @@ export const doctorDetails = [
   },
 ];
 
+export const isPregnant = [
+  {
+    question: "When is your expected delivery date?",
+    type: "date",
+    nextPull: doctorDetails,
+  },
+];
+
+export const medicalDetailsContd2 = [
+  {
+    question: "Are you currently Pregnant?",
+    options: [
+      { name: "yes", nextPull: isPregnant },
+      { name: "no", nextPull: doctorDetails },
+    ],
+  },
+];
+
+export const consumesTobacco = [
+  {
+    question: "How many sticks?",
+    nextPull: medicalDetailsContd2,
+  },
+];
+
+export const medicalDetailsContd = [
+  {
+    question: "Do you consume tobacco?",
+    options: [
+      { name: "yes", nextPull: consumesTobacco },
+      { name: "no", nextPull: medicalDetailsContd2 },
+    ],
+  },
+];
+
+export const drinksAlcohol = [
+  {
+    question: "How many litres?",
+    nextPull: medicalDetailsContd,
+  },
+];
+
 export const medicalDetails = [
   {
     question: "What is your Weight",
+    summaryName: "Weight",
     appHeader: "Health Form",
   },
   {
     question: "What is your Height?",
+    summaryName: "Height",
   },
   {
     question: "What is your Gender?",
-    options: [
-      {
-        name: "Male",
-      },
-      {
-        name: "Female",
-      },
-    ],
+    summaryName: "Gender",
+    type: "gender",
   },
   {
     question:
@@ -239,21 +292,19 @@ export const medicalDetails = [
   },
   {
     question:
+      "Have you ever been diagnosed, counselled or treated in connection with sexually transmitted diseases, including syphillis, HIV(AIDS), Hepatitis B/C or Herpes?",
+    options: [{ name: "yes" }, { name: "no" }],
+  },
+  {
+    question:
       "Have you ever suffered from any infection of the kidney, liver, urinary organs, blood in urine or any form of cancer?",
     options: [{ name: "yes" }, { name: "no" }],
   },
   {
     question:
-      "Have you ever been diagnosed, counselled or treated in connection with sexually transmitted diseases, including syphillis, HIV(AIDS), Hepatitis B/C or Herpes?",
-    options: [{ name: "yes" }, { name: "no" }],
-  },
-
-  {
-    question:
       "Do you have any pre-existing conditions or suffered from any other illness, disorder, diseases not mentioned above?",
     options: [{ name: "yes" }, { name: "no" }],
   },
-
   {
     question:
       "Have you any disability or any previous accident or undergone any operation?",
@@ -262,30 +313,10 @@ export const medicalDetails = [
 
   {
     question: "Do you have consume alcohol?",
-    options: [{ name: "yes" }, { name: "no" }],
-  },
-
-  {
-    question: "How many litres?",
-  },
-
-  {
-    question: "Do you consume tobacco?",
-    options: [{ name: "yes" }, { name: "no" }],
-  },
-
-  {
-    question: "How many sticks?",
-  },
-
-  {
-    question: "Are you currently Pregnant?",
-    options: [{ name: "yes" }, { name: "no" }],
-  },
-
-  {
-    question: "When is your expected delivery date?",
-    nextPull: doctorDetails,
+    options: [
+      { name: "yes", nextPull: drinksAlcohol },
+      { name: "no", nextPull: medicalDetailsContd },
+    ],
   },
 
   // respiratoryIssues
@@ -294,9 +325,11 @@ export const medicalDetails = [
 export const termsIntroContd = [
   {
     question: "Duration in Years",
+    summaryName: "Duration",
   },
   {
     question: "Your Quoted Premium is:",
+    summaryName: "Frequency",
     options: [
       {
         name: "Monthly",
@@ -317,6 +350,7 @@ export const termsIntroContd = [
 export const premiumAndWantToPay = [
   {
     question: "What is the Premium you want to pay?",
+    summaryName: "Premium",
     nextPull: termsIntroContd,
   },
 ];
@@ -324,6 +358,7 @@ export const premiumAndWantToPay = [
 export const targetSumAssured = [
   {
     question: "What is your sum Assured",
+    summaryName: "Sum Assured",
     nextPull: termsIntroContd,
   },
 ];
@@ -358,6 +393,7 @@ export const userDetailQuestions = [
   },
   {
     question: "What is your Date of Birth",
+    type: "date",
   },
   {
     question: "What is your Phone Number",
@@ -375,6 +411,7 @@ export const userDetailQuestions = [
 export const intro = [
   {
     question: "What Type of plan would you like to buy?",
+    summaryName: "Policy Class",
     appHeader: "Buy Assurance",
     options: [
       {
@@ -385,5 +422,14 @@ export const intro = [
         name: "Education Endowment",
       },
     ],
+  },
+];
+
+export const genderOptions = [
+  {
+    name: "male",
+  },
+  {
+    name: "female",
   },
 ];
